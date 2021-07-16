@@ -61,45 +61,33 @@ Menu _defaultMenu() {
   return Menu([
     Dish.fromAsset(
       0,
-      'Rice Noodles',
-      10000,
+      'المعكرونة الصينية',
+      30,
       'assets/rice_noodles.png',
     ),
     Dish.fromAsset(
       1,
-      'Lime Juice',
-      20000,
+      'عصير التفاح الاخضر',
+      10,
       'assets/lime_juice.png',
     ),
     Dish.fromAsset(
       2,
-      'Vegan Noodle',
-      30000,
+      'سلطة',
+      15,
       'assets/vegan_noodles.png',
     ),
     Dish.fromAsset(
       3,
-      'Oatmeal with Berries and Coconut',
-      40000,
+      'الشوقان مع الفرولة',
+      27,
       'assets/oatmeal_with_berries_and_coconut.png',
     ),
     Dish.fromAsset(
       4,
-      'Fried Chicken with Egg',
-      50000,
+      'الدجاج المقلي مع البيض',
+      60,
       'assets/fried_chicken-with_with_wit_egg.png',
-    ),
-    Dish.fromAsset(
-      5,
-      'Kimchi',
-      60000,
-      'assets/kimchi.png',
-    ),
-    Dish.fromAsset(
-      6,
-      'Coffee',
-      70000,
-      'assets/coffee.png',
     ),
   ]);
 }

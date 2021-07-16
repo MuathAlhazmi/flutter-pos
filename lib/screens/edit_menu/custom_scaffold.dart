@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -201,9 +202,12 @@ class _CenterDockedButton extends StatelessWidget {
       imgProvider: pickedImage != null ? MemoryImage(pickedImage!) : null,
     );
     final _fab = FloatingActionButton(
-      backgroundColor: RallyColors.buttonColor,
+      backgroundColor: RallyColors.primaryColor,
       onPressed: () => expanded.value = true,
-      child: Icon(Icons.add),
+      child: Icon(
+        CupertinoIcons.add,
+        color: Colors.white,
+      ),
     );
 
     return RadialMenu(

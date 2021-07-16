@@ -1,5 +1,6 @@
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
+import 'package:posapp/theme/rally.dart';
 import '../avatar.dart';
 
 const double height = 85.0;
@@ -86,88 +87,96 @@ class _CounterState extends State<Counter> with SingleTickerProviderStateMixin {
 
         final colorTween = ColorTween(
           begin: Theme.of(context).cardTheme.color, // disabled color
-          end: Theme.of(context).primaryColorLight, // hightlight if > 0
+          end: RallyColors.primaryColor.withOpacity(.5), // hightlight if > 0
         );
 
-        return Stack(
-          alignment: Alignment.centerLeft,
-          children: [
-            Container(
-              height: height - 20.0,
-              child: Card(
-                margin: const EdgeInsets.only(left: height - 20.0),
-                color: colorTween.animate(animController).value,
-                child: GestureDetector(
-                  behavior: HitTestBehavior.translucent,
-                  onTap: () => value = add(animController, value),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 2.0, vertical: 4.0),
-                    child: Row(
-                      children: [
-                        const Spacer(),
-                        Expanded(
-                          flex: 7,
-                          child: ListTile(
-                            minVerticalPadding: 2.0,
-                            horizontalTitleGap: 2.0,
-                            contentPadding: EdgeInsets.symmetric(horizontal: 2.0),
-                            title: Text(
-                              widget.title,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: Container(
+            height: 85,
+            child: Card(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+              color: colorTween.animate(animController).value,
+              child: GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: () => value = add(animController, value),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 2.0, vertical: 4.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: ListTile(
+                          minVerticalPadding: 2.0,
+                          horizontalTitleGap: 2.0,
+                          contentPadding: EdgeInsets.symmetric(horizontal: 2.0),
+                          title: Text(
+                            widget.title,
+                            style: TextStyle(fontFamily: 'Cairo'),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          ),
+                          subtitle: Text(
+                            widget.subtitle,
+                            style: TextStyle(fontFamily: 'Cairo'),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: FloatingActionButton(
+                          backgroundColor: Colors.redAccent,
+                          // decrease
+                          heroTag: null,
+                          onPressed: () => value = sub(animController, value),
+                          child: Icon(
+                            Icons.remove,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 2,
+                        child: TextField(
+                          controller: widget.textEditingController,
+                          enabled: false,
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.headline5,
+                        ),
+                      ),
+                      Expanded(
+                        child: FloatingActionButton(
+                          backgroundColor: RallyColors.primaryColor,
+                          // increase
+                          heroTag: null,
+                          onPressed: () => value = add(animController, value),
+                          child: Icon(
+                            Icons.add,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        height: height,
+                        width: height,
+                        margin: const EdgeInsets.only(left: 2.0),
+                        decoration: ShapeDecoration(
+                          shape: CircleBorder(),
+                          shadows: [
+                            BoxShadow(
+                              color: RallyColors.primaryColor.withOpacity(.5),
+                              blurRadius: animController.value * 6,
+                              spreadRadius: animController.value * 9,
                             ),
-                            subtitle: Text(widget.subtitle),
-                          ),
+                          ],
                         ),
-                        Expanded(
-                          child: FloatingActionButton(
-                            // decrease
-                            heroTag: null,
-                            onPressed: () => value = sub(animController, value),
-                            child: Icon(Icons.remove),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: TextField(
-                            controller: widget.textEditingController,
-                            enabled: false,
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.headline5,
-                          ),
-                        ),
-                        Expanded(
-                          child: FloatingActionButton(
-                            // increase
-                            heroTag: null,
-                            onPressed: () => value = add(animController, value),
-                            child: Icon(Icons.add),
-                          ),
-                        ),
-                        const SizedBox(width: 2.0),
-                      ],
-                    ),
+                        child: child,
+                      ),
+                      const SizedBox(width: 2.0),
+                    ],
                   ),
                 ),
               ),
             ),
-            Container(
-              height: height,
-              width: height,
-              margin: const EdgeInsets.only(left: 2.0),
-              decoration: ShapeDecoration(
-                shape: CircleBorder(),
-                shadows: [
-                  BoxShadow(
-                    color: Theme.of(context).primaryColorLight,
-                    blurRadius: animController.value * 6,
-                    spreadRadius: animController.value * 9,
-                  ),
-                ],
-              ),
-              child: child,
-            ),
-          ],
+          ),
         );
       },
       child: Avatar(imgProvider: widget.imgProvider),

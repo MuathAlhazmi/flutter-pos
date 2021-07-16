@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:posapp/snackbar.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -35,30 +36,27 @@ class MenuScreen extends StatelessWidget {
             // everything in this listview is going to be updated
             final supplier = Provider.of<Supplier>(context);
 
-            return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10.0),
-              child: Counter(
-                model.putIfAbsent(dish).quantity,
-                onIncrement: (_) {
-                  lineItem.addOne();
+            return Counter(
+              model.putIfAbsent(dish).quantity,
+              onIncrement: (_) {
+                lineItem.addOne();
 
+                model.setTableStatus(TableStatus.incomplete, supplier);
+              },
+              onDecrement: (_) {
+                lineItem.substractOne();
+                // If there are not a single item in this order left,
+                // Then set status to "empty" to disable the [_ConfirmButton]
+                if (model.putIfAbsent(dish).quantity == 0 && model.totalMenuItemQuantity == 0) {
+                  model.setTableStatus(TableStatus.empty, supplier);
+                } else {
                   model.setTableStatus(TableStatus.incomplete, supplier);
-                },
-                onDecrement: (_) {
-                  lineItem.substractOne();
-                  // If there are not a single item in this order left,
-                  // Then set status to "empty" to disable the [_ConfirmButton]
-                  if (model.putIfAbsent(dish).quantity == 0 && model.totalMenuItemQuantity == 0) {
-                    model.setTableStatus(TableStatus.empty, supplier);
-                  } else {
-                    model.setTableStatus(TableStatus.incomplete, supplier);
-                  }
-                },
-                imgProvider: dish.imgProvider,
-                title: dish.dish,
-                subtitle: '(${Money.format(dish.price)})',
-                key: ObjectKey(model),
-              ),
+                }
+              },
+              imgProvider: dish.imgProvider,
+              title: dish.dish,
+              subtitle: '(${Money.format(dish.price)})',
+              key: ObjectKey(model),
             );
           }),
     );
@@ -84,6 +82,7 @@ class _ConfirmButton extends StatelessWidget {
               minWidth: MediaQuery.of(context).size.width / 2,
               onPressed: status == TableStatus.incomplete
                   ? () {
+                      snackBarWidget(context, 'تم الطلب بنجاح', Icons.check_circle, Colors.white);
                       final supplier = context.read<Supplier>();
                       model.setTableStatus(TableStatus.occupied, supplier);
                       model.memorizePreviousState();

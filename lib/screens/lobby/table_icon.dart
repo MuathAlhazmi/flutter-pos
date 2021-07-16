@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -36,6 +37,7 @@ class TableIcon extends StatelessWidget {
         angle: angles[0],
         key: ValueKey<int>(1),
         child: FloatingActionButton(
+          backgroundColor: RallyColors.primaryColor,
           mini: true,
           heroTag: 'menu-subtag-table-${table.id}',
           onPressed: () {
@@ -49,7 +51,10 @@ class TableIcon extends StatelessWidget {
               );
             });
           },
-          child: Icon(Icons.add),
+          child: Icon(
+            CupertinoIcons.add,
+            color: Colors.white,
+          ),
         ),
       ),
       // see order details (and checkout)
@@ -74,8 +79,11 @@ class TableIcon extends StatelessWidget {
                   });
                 }
               : null,
-          backgroundColor: table.status == TableStatus.occupied ? null : RallyColors.gray,
-          child: Icon(Icons.receipt),
+          backgroundColor: table.status == TableStatus.occupied ? null : RallyColors.primaryColor,
+          child: Icon(
+            Icons.receipt_rounded,
+            color: Colors.white,
+          ),
         ),
       ),
       // remove table node
@@ -84,10 +92,14 @@ class TableIcon extends StatelessWidget {
         angle: angles[2],
         key: ValueKey<int>(3),
         child: FloatingActionButton(
+          backgroundColor: RallyColors.primaryColor,
           mini: true,
           heroTag: 'delete-subtag-table-${table.id}',
           onPressed: () => _removeTable(context, table.id),
-          child: Icon(Icons.delete),
+          child: Icon(
+            Icons.delete,
+            color: Colors.white,
+          ),
         ),
       ),
     ];
@@ -117,8 +129,8 @@ class _RadialButton extends StatelessWidget {
       begin: model.status == TableStatus.occupied
           ? Colors.yellow[300]
           : model.status == TableStatus.incomplete
-              ? Colors.grey[500]
-              : Theme.of(context).floatingActionButtonTheme.backgroundColor,
+              ? RallyColors.primaryColor.withOpacity(.5)
+              : RallyColors.primaryColor,
       end: RallyColors.focusColor,
     );
 
@@ -140,7 +152,10 @@ class _RadialButton extends StatelessWidget {
             radialAnimationController.reverse();
           },
           backgroundColor: _colorTween.animate(radialAnimationController).value,
-          child: Icon(Icons.circle),
+          child: Icon(
+            Icons.circle,
+            color: Colors.white,
+          ),
         );
       },
       drawerBuilder: (context, animController) =>

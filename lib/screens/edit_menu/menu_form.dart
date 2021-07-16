@@ -82,18 +82,22 @@ List<TextField> buildInputs(
 ]) {
   return [
     TextField(
+      style: TextStyle(fontFamily: 'Cairo'),
       controller: dishNameController,
       keyboardType: TextInputType.text,
       textAlign: align,
-      decoration: InputDecoration(labelText: AppLocalizations.of(context)?.edit_menu_formLabel),
+      decoration: InputDecoration(
+        labelText: AppLocalizations.of(context)?.edit_menu_formLabel,
+      ),
     ),
     TextField(
+      style: TextStyle(fontFamily: 'Cairo'),
       controller: priceController,
       keyboardType: TextInputType.number,
       textAlign: align,
       decoration: InputDecoration(
         labelText: AppLocalizations.of(context)?.edit_menu_formPrice,
-        suffix: Text(Money.symbol),
+        suffix: Text('SAR'),
       ),
       inputFormatters: [MoneyFormatter()],
     ),

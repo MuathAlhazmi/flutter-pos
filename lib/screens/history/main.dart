@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -19,6 +20,7 @@ class HistoryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: 100,
         title: _LeadingTitle(),
         bottomOpacity: 0.5,
         bottom: TabBar(
@@ -30,13 +32,16 @@ class HistoryScreen extends StatelessWidget {
         actions: [
           Column(
             children: [
-              Switch.adaptive(
+              CupertinoSwitch(
                 value: context.select((HistorySupplierByDate s) => s.discountFlag),
                 onChanged: (s) => context.read<HistorySupplierByDate>().discountFlag = s,
               ),
               Text(
                 AppLocalizations.of(context)?.history_toggleDiscount ?? 'Apply Discount Rate',
-                style: Theme.of(context).textTheme.caption?.apply(fontSizeFactor: 0.5),
+                style: Theme.of(context)
+                    .textTheme
+                    .caption
+                    ?.apply(fontSizeFactor: 0.5, fontFamily: 'Cairo'),
               ),
             ],
           ),
@@ -45,7 +50,7 @@ class HistoryScreen extends StatelessWidget {
           Theme(
             data: Theme.of(context).copyWith(
               textTheme: Theme.of(context).textTheme.copyWith(
-                    bodyText1: GoogleFonts.eczar(fontSize: 20),
+                    bodyText1: TextStyle(fontSize: 20, fontFamily: 'Cairo'),
                   ),
             ),
             child: DatePicker(),

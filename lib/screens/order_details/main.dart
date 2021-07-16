@@ -23,8 +23,11 @@ class DetailsScreen extends StatelessWidget {
                 Navigator.pop(context);
               },
               elevation: 4.0,
-              backgroundColor: RallyColors.buttonColor,
-              child: Icon(Icons.print_sharp),
+              backgroundColor: RallyColors.primaryColor,
+              child: Icon(
+                Icons.print_sharp,
+                color: Colors.white,
+              ),
             )
           : null,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

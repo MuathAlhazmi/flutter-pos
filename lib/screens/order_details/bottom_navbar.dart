@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:posapp/snackbar.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -100,7 +102,7 @@ class _ApplyDiscountButton extends StatelessWidget {
 Future<double?> _popUpDiscount(BuildContext context, double totalPrice) {
   final notif = ValueNotifier('1'); // notify which type of TextField to display
   final percentageController = TextEditingController(text: '20');
-  final fixedPriceController = TextEditingController(text: Money.format(10000));
+  final fixedPriceController = TextEditingController(text: Money.format(200));
 
   final pctCtrl = TextField(
     controller: percentageController,
@@ -122,6 +124,7 @@ Future<double?> _popUpDiscount(BuildContext context, double totalPrice) {
     context: context,
     builder: (context) {
       return AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         contentPadding: const EdgeInsets.all(12.0),
         content: ValueListenableBuilder(
           valueListenable: notif,
@@ -161,13 +164,14 @@ Future<double?> _popUpDiscount(BuildContext context, double totalPrice) {
                 if (notif.value == '2') {
                   // convert fixed price to percentage
                   discountPct = Money.unformat(selected.text) * 100 / totalPrice;
-                } else {
+                }
+                if (notif.value == '1') {
                   discountPct = double.parse(selected.text);
                 }
                 Navigator.pop<double>(context, discountPct);
               }
             },
-            child: Icon(Icons.check),
+            child: Icon(CupertinoIcons.check_mark),
           ),
           TextButton(
             onPressed: () {
@@ -188,6 +192,7 @@ Future<double?> _popUpPayment(BuildContext scaffoldCtx, double needsToPay) {
     barrierDismissible: false,
     builder: (context) {
       return AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         content: TextField(
           controller: t,
           keyboardType: TextInputType.numberWithOptions(signed: true),

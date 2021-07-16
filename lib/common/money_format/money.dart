@@ -8,10 +8,10 @@ class Money {
   static final _fc = NumberFormat('#,###.##');
   static final _fcFull = NumberFormat.simpleCurrency();
 
-  static String get symbol => _fc.currencySymbol;
+  static String get symbol => 'SAR';
 
   static String format(num price, {bool symbol = false}) {
-    return symbol ? _fcFull.format(price) : _fc.format(price);
+    return _fc.format(price);
   }
 
   static num unformat(String money) {

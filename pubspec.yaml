@@ -26,6 +26,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: ^0.17.0
+  flash: ^2.0.1
   animations: ^2.0.0
   provider: ^5.0.0
   localstorage:
@@ -51,7 +52,7 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  # cupertino_icons: ^1.0.0
+  cupertino_icons: ^1.0.3
 
 dev_dependencies:
   flutter_test:
@@ -74,6 +75,19 @@ flutter:
     - assets/
     - google_fonts/
 
+
+  fonts:
+    - family: Cairo
+      fonts:
+        - asset: assets/fonts/Cairo-Regular.ttf
+        - asset: assets/fonts/Cairo-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Cairo-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Cairo-Black.ttf
+
+          weight: 900
+  
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
 flutter_intl:
@@ -83,3 +97,6 @@ flutter_icons:
   android: "launcher_icon"
   ios: true
   image_path: "assets/app_icon/icon.png"
+  
+  
+  

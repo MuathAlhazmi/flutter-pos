@@ -8,11 +8,11 @@ const bottomNavbarHeight = 48.0;
 
 class RallyColors {
   static const Color gray = Color(0xFFD8D8D8);
-  static const Color primaryBackground = Color(0xFF33333D);
-  static const Color focusColor = Color(0xCCFFFFFF);
-  static const Color cardBackground = Color(0x03FEFEFE);
-  static const Color buttonColor = Color(0xFF045D56);
-  static const Color primaryColor = Color(0xFF1EB980);
+  static const Color primaryBackground = Color(0xFF1D1D35);
+  static const Color focusColor = Color(0xFF00BF6D);
+  static const Color cardBackground = Color(0xFF1D1D35);
+  static const Color buttonColor = Color(0xFF00BF6D);
+  static const Color primaryColor = Color(0xFF00BF6D);
 }
 
 ThemeData buildRallyTheme() {
@@ -72,10 +72,12 @@ ThemeData buildRallyTheme() {
     colorScheme: ColorScheme.dark(), // for date range picker
     inputDecorationTheme: InputDecorationTheme(
       labelStyle: TextStyle(
+        fontFamily: 'Cairo',
         color: RallyColors.gray,
         fontWeight: FontWeight.w500,
       ),
       hintStyle: TextStyle(
+        fontFamily: 'Cairo',
         color: RallyColors.gray.withOpacity(0.5),
         fontWeight: FontWeight.w300,
       ),
@@ -92,21 +94,25 @@ ThemeData buildRallyTheme() {
 TextTheme _buildRallyTextTheme(TextTheme base) {
   return base
       .copyWith(
-        bodyText2: GoogleFonts.robotoCondensed(
+        bodyText2: TextStyle(
+          fontFamily: 'Cairo',
           fontSize: 14,
           fontWeight: FontWeight.w400,
           letterSpacing: letterSpacingOrNone(0.5),
         ),
-        bodyText1: GoogleFonts.eczar(
+        bodyText1: TextStyle(
+          fontFamily: 'Cairo',
           fontSize: 40,
           fontWeight: FontWeight.w400,
           letterSpacing: letterSpacingOrNone(1.4),
         ),
-        button: GoogleFonts.robotoCondensed(
+        button: TextStyle(
+          fontFamily: 'Cairo',
           fontWeight: FontWeight.w700,
           letterSpacing: letterSpacingOrNone(2.8),
         ),
-        headline5: GoogleFonts.eczar(
+        headline5: TextStyle(
+          fontFamily: 'Cairo',
           fontSize: 40,
           fontWeight: FontWeight.w600,
           letterSpacing: letterSpacingOrNone(1.4),

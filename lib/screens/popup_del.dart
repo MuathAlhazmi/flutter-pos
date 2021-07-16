@@ -6,7 +6,12 @@ Future<bool?> popUpDelete(BuildContext context, {Widget? title}) {
   return showDialog<bool>(
     context: context,
     builder: (context) => AlertDialog(
-      title: title ?? Text(AppLocalizations.of(context)!.generic_deleteQuestion),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      title: title ??
+          Text(
+            AppLocalizations.of(context)!.generic_deleteQuestion,
+            style: TextStyle(fontFamily: 'Cairo'),
+          ),
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(false),

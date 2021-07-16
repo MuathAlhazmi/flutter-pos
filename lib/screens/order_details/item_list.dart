@@ -82,11 +82,15 @@ class _Items extends StatelessWidget {
                     ? order.dishName
                     : supplier.find(order.dishID)?.dish ??
                         order.dishName + (AppLocalizations.of(context)?.details_liDeleted ?? ''),
+                style: TextStyle(fontFamily: 'Cairo'),
               ),
               trailing: Text(
-                Money.format(fromScreen == 'history'
-                    ? order.price * order.quantity
-                    : supplier.find(order.dishID)?.price ?? order.price * order.quantity),
+                Money.format(
+                  fromScreen == 'history'
+                      ? order.price * order.quantity
+                      : supplier.find(order.dishID)?.price ?? order.price * order.quantity,
+                ),
+                style: TextStyle(fontFamily: 'Cairo'),
               ),
             ),
           );

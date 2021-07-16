@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +15,7 @@ class LobbyScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
+        color: RallyColors.primaryBackground,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -25,7 +27,7 @@ class LobbyScreen extends StatelessWidget {
                 },
                 minWidth: MediaQuery.of(context).size.width / 2,
                 shape: CustomShape(side: CustomShapeSide.left),
-                child: Icon(Icons.menu),
+                child: Icon(CupertinoIcons.square_list),
               ),
             ),
             Tooltip(
@@ -34,7 +36,7 @@ class LobbyScreen extends StatelessWidget {
                 onPressed: () => Navigator.pushNamed(context, '/edit-menu'),
                 minWidth: MediaQuery.of(context).size.width / 2,
                 shape: CustomShape(side: CustomShapeSide.right),
-                child: Icon(Icons.menu_book_sharp),
+                child: Icon(CupertinoIcons.pencil_circle_fill),
               ),
             )
           ],
@@ -50,6 +52,7 @@ class LobbyScreen extends StatelessWidget {
 
   Future showBottomSheetMenu(BuildContext context) {
     return showModalBottomSheet(
+      backgroundColor: RallyColors.primaryBackground,
       context: context,
       // isScrollControlled combined with shrinkWrap for minimal height in bottom sheet
       isScrollControlled: true,
@@ -60,6 +63,7 @@ class LobbyScreen extends StatelessWidget {
             ListTile(
               title: Text(
                 AppLocalizations.of(context)?.lobby_report.toUpperCase() ?? 'HISTORY',
+                style: TextStyle(fontFamily: 'Cairo'),
                 textAlign: TextAlign.center,
               ),
               onTap: () => Navigator.pushNamed(context, '/history'),
@@ -68,6 +72,7 @@ class LobbyScreen extends StatelessWidget {
               title: Text(
                 AppLocalizations.of(context)?.lobby_journal.toUpperCase() ?? 'EXPENSE JOURNAL',
                 textAlign: TextAlign.center,
+                style: TextStyle(fontFamily: 'Cairo'),
               ),
               onTap: () => Navigator.pushNamed(context, '/expense'),
             ),

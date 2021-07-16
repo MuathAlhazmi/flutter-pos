@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:posapp/theme/rally.dart';
 import 'package:provider/provider.dart';
 
 import '../../common/common.dart';
@@ -10,13 +12,17 @@ class AddNewEntryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
+      backgroundColor: RallyColors.primaryColor,
       onPressed: () async {
         final j = await _popUpNewJournal(context);
         if (j != null) {
           context.read<ExpenseSupplier>().addJournal(j);
         }
       },
-      child: Icon(Icons.add),
+      child: Icon(
+        CupertinoIcons.add,
+        color: Colors.white,
+      ),
     );
   }
 }
@@ -31,6 +37,7 @@ Future<Journal?> _popUpNewJournal(BuildContext scaffoldCtx) {
     builder: (context) {
       final _formKey = GlobalKey<FormState>();
       return AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         content: Form(
           key: _formKey,
           child: Column(

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 import 'theme/theme.dart';
 import 'database_factory.dart';
 import 'provider/src.dart';
@@ -31,7 +30,7 @@ class PosApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // title: '',
+      debugShowCheckedModeBanner: false,
       theme: appTheme,
       localizationsDelegates: [
         AppLocalizations.delegate,
@@ -39,7 +38,7 @@ class PosApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: AppLocalizations.supportedLocales,
+      supportedLocales: [Locale('ar')],
       initialRoute: '/',
       builder: (_, screen) => FutureBuilder<dynamic>(
         future: _init,
@@ -91,7 +90,6 @@ class PosApp extends StatelessWidget {
                 length: 2,
                 child: MultiProvider(
                   providers: [
-                    // TODO: restructure to use parent model HistoryOrderSupplier
                     ChangeNotifierProvider(
                       create: (_) => HistorySupplierByDate(database: _storage),
                     ),

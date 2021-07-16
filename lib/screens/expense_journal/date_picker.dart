@@ -1,4 +1,5 @@
 import 'package:date_range_picker/date_range_picker.dart' as date_range_picker;
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +25,7 @@ class DatePicker extends StatelessWidget {
           provider.selectedRange = newlySelectedRange;
         }
       },
-      child: Icon(Icons.date_range),
+      child: Icon(CupertinoIcons.calendar),
     );
   }
 }

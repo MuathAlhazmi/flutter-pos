@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:super_tooltip/super_tooltip.dart';
@@ -24,17 +25,25 @@ class _AnimatedLongClickableFABState extends State<AnimatedLongClickableFAB>
     with TickerProviderStateMixin {
   Timer? t;
   late final AnimationController valueController, colorController;
-  ColorTween cTween = ColorTween(begin: RallyColors.gray, end: RallyColors.primaryColor);
+  ColorTween cTween =
+      ColorTween(begin: CupertinoColors.tertiarySystemFill, end: RallyColors.primaryColor);
 
   final tooltip = SuperTooltip(
+    outsideBackgroundColor: Colors.transparent,
+    borderColor: Colors.transparent,
+    backgroundColor: RallyColors.primaryColor,
+    shadowColor: RallyColors.primaryColor.withOpacity(.4),
     popupDirection: TooltipDirection.up,
     arrowTipDistance: 25.0,
     borderWidth: 1.0,
-    backgroundColor: RallyColors.cardBackground,
     content: Builder(builder: (context) {
       return Material(
+        type: MaterialType.transparency,
         child: Text(
           AppLocalizations.of(context)?.lobby_tooltip ?? '',
+          style: TextStyle(
+            fontFamily: 'Cairo',
+          ),
           softWrap: true,
         ),
       );
@@ -85,8 +94,10 @@ class _AnimatedLongClickableFABState extends State<AnimatedLongClickableFAB>
         ),
         // must be last to receive tap events
         FloatingActionButton(
+          elevation: 20,
+
           onPressed: () {}, // ignore, let [GestureDetector] take care of this
-          backgroundColor: RallyColors.buttonColor,
+          backgroundColor: RallyColors.primaryColor,
           child: GestureDetector(
             onTapDown: (_) {
               t = Timer(_targetTime, widget.onLongPress);
@@ -103,7 +114,10 @@ class _AnimatedLongClickableFABState extends State<AnimatedLongClickableFAB>
               valueController.reset();
               colorController.reset();
             },
-            child: Icon(Icons.add),
+            child: Icon(
+              CupertinoIcons.add,
+              color: Colors.white,
+            ),
           ),
         ),
       ],

@@ -1,0 +1,45 @@
+{
+  "main_title": "نظام للمطاعم",
+  "generic_deleteQuestion": "هل تريد الحذف؟",
+  "generic_yes": "نعم",
+  "generic_no": "لا",
+  "generic_confirm": "تأكيد",
+  "generic_cancel": "إلغاء",
+  "lobby": "الرئيسية",
+  "lobby_drawerHeader": "نظام للمطاعم",
+  "lobby_report": "تقرير",
+  "lobby_journal": "المدونات",
+  "lobby_menuEdit": "تعديل قائمة الطعام",
+  "lobby_tooltip": "اضغط بشكل مستمر لكي تضيف طاولة",
+  "details_discount": "الخصم",
+  "details_discountTxt": "المجموع: {total}, الخصم: {discountPct}%",
+  "@details_discountTxt": {
+    "placeholders": {
+      "total": {
+        "type": "String",
+        "format": "currency",
+        "description": "المبلغ قيل الدفع"
+      },
+      "discountPct": {
+        "type": "String",
+        "format": "decimalPercentPattern"
+      }
+    }
+  },
+  "details_liDeleted": "(محذوف)",
+  "details_customerPay": "دفع العملاء",
+  "details_notEnough": "غير كافي",
+  "menu_confirm": "تأكيد الطلب",
+  "menu_undo": "رجوع",
+  "edit_menu_filterHint": "..التصفية باسم الطبق",
+  "edit_menu_formLabel": "الطبق",
+  "edit_menu_formPrice": "السعر",
+  "history_toggleDiscount": "تطبيق معدل الخصم",
+  "history_delPopUpTitle": "تجاهل هذا الطلب؟",
+  "history_rangePickerHelpTxt": "اختر نطاق",
+  "journal_entry": "تدوين",
+  "journal_entryHint": "صف تدوينك",
+  "journal_entryReqTxt": "صفة التدوين مطلوبة",
+  "journal_amt": "المبلغ",
+  "journal_datetime": "الوقت"
+}
