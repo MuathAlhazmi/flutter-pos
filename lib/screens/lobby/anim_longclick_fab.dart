@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +7,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:super_tooltip/super_tooltip.dart';
 import '../../theme/rally.dart';
 
-const _targetTime = Duration(seconds: 2);
+const _targetTime = Duration(seconds: 1);
 
 /// An extended version of [FloatingActionButton] that allows long press, fires a [onLongPress]
 /// callback after 2s
@@ -94,7 +95,7 @@ class _AnimatedLongClickableFABState extends State<AnimatedLongClickableFAB>
         ),
         // must be last to receive tap events
         FloatingActionButton(
-          elevation: 20,
+          elevation: 0,
 
           onPressed: () {}, // ignore, let [GestureDetector] take care of this
           backgroundColor: RallyColors.primaryColor,

@@ -1,6 +1,7 @@
 import 'package:blue_thermal_printer/blue_thermal_printer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:posapp/snackbar.dart';
 
 import '../common/common.dart';
 import '../provider/src.dart';
@@ -20,13 +21,11 @@ class Printer {
       try {
         _bondedDevices = await instance.getBondedDevices();
         if (_bondedDevices!.isEmpty) {
-          final snackbar = SnackBar(content: Text('No bluetooth devices!'));
-          ScaffoldMessenger.of(context).showSnackBar(snackbar);
+          snackBarWidget(context, 'لا يوجد اجهزة بلوتوث', Icons.error, Colors.white);
           return;
         }
       } on PlatformException catch (e) {
-        final snackbar = SnackBar(content: Text(e.toString()));
-        ScaffoldMessenger.of(context).showSnackBar(snackbar);
+        snackBarWidget(context, e.toString(), Icons.error, Colors.white);
         return;
       }
     }
@@ -37,8 +36,7 @@ class Printer {
       try {
         await instance.connect(_device);
       } on PlatformException catch (e) {
-        final snackbar = SnackBar(content: Text(e.toString()));
-        ScaffoldMessenger.of(context).showSnackBar(snackbar);
+        snackBarWidget(context, e.toString(), Icons.error, Colors.white);
         return;
       }
     }

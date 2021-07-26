@@ -12,7 +12,7 @@ import '../../provider/src.dart';
 import '../avatar.dart';
 import 'menu_form.dart';
 
-const Duration _animDuration = Duration(milliseconds: 600);
+const Duration _animDuration = Duration(milliseconds: 1000);
 
 /// Custom [Scaffold] with [AnimatedContainer] as bottomNavigationBar &
 /// a centered FAB which can add new dish to menu list.
@@ -77,6 +77,7 @@ class _CustomScaffoldState extends State<CustomScaffold> with SingleTickerProvid
     return Scaffold(
       extendBody: true,
       bottomNavigationBar: BottomAppBar(
+        color: RallyColors.primaryBackground,
         notchMargin: 6.0,
         child: _BottomAppBarContainer(
           expanded,
@@ -171,6 +172,7 @@ class _BottomAppBarContainer extends StatelessWidget {
       valueListenable: expanded,
       builder: (_, __, ___) {
         return AnimatedContainer(
+          color: RallyColors.primaryBackground,
           curve: Curves.easeOutCirc,
           duration: _animDuration,
           height: expanded.value ? height : 48.0,

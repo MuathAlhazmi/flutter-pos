@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:posapp/screens/draw/draw.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'theme/theme.dart';
@@ -38,7 +39,7 @@ class PosApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: [Locale('ar')],
+      supportedLocales: [Locale('en')],
       initialRoute: '/',
       builder: (_, screen) => FutureBuilder<dynamic>(
         future: _init,

@@ -208,9 +208,8 @@ Future<double?> _popUpPayment(BuildContext scaffoldCtx, double needsToPay) {
             onPressed: () {
               final p = Money.unformat(t.text);
               if (p < needsToPay) {
-                final snackBar =
-                    SnackBar(content: Text(AppLocalizations.of(context)!.details_notEnough));
-                ScaffoldMessenger.of(scaffoldCtx).showSnackBar(snackBar);
+                snackBarWidget(context, AppLocalizations.of(context)!.details_notEnough,
+                    Icons.error, Colors.white);
               } else {
                 Navigator.pop<double>(context, p.toDouble());
               }

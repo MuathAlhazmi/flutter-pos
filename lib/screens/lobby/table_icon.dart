@@ -37,7 +37,8 @@ class TableIcon extends StatelessWidget {
         angle: angles[0],
         key: ValueKey<int>(1),
         child: FloatingActionButton(
-          backgroundColor: RallyColors.primaryColor,
+          elevation: 0,
+          backgroundColor: CupertinoColors.tertiarySystemFill,
           mini: true,
           heroTag: 'menu-subtag-table-${table.id}',
           onPressed: () {
@@ -53,7 +54,7 @@ class TableIcon extends StatelessWidget {
           },
           child: Icon(
             CupertinoIcons.add,
-            color: Colors.white,
+            color: radialAnimationController.value > 0 ? Colors.white : Colors.transparent,
           ),
         ),
       ),
@@ -63,6 +64,7 @@ class TableIcon extends StatelessWidget {
         angle: angles[1],
         key: ValueKey<int>(2),
         child: FloatingActionButton(
+          elevation: 0,
           mini: true,
           heroTag: 'details-subtag-table-${table.id}',
           onPressed: table.status == TableStatus.occupied
@@ -79,10 +81,11 @@ class TableIcon extends StatelessWidget {
                   });
                 }
               : null,
-          backgroundColor: table.status == TableStatus.occupied ? null : RallyColors.primaryColor,
+          backgroundColor:
+              table.status == TableStatus.occupied ? null : CupertinoColors.tertiarySystemFill,
           child: Icon(
             Icons.receipt_rounded,
-            color: Colors.white,
+            color: radialAnimationController.value > 0 ? Colors.white : Colors.transparent,
           ),
         ),
       ),
@@ -92,13 +95,14 @@ class TableIcon extends StatelessWidget {
         angle: angles[2],
         key: ValueKey<int>(3),
         child: FloatingActionButton(
-          backgroundColor: RallyColors.primaryColor,
+          elevation: 0,
+          backgroundColor: CupertinoColors.tertiarySystemFill,
           mini: true,
           heroTag: 'delete-subtag-table-${table.id}',
           onPressed: () => _removeTable(context, table.id),
           child: Icon(
             Icons.delete,
-            color: Colors.white,
+            color: radialAnimationController.value > 0 ? Colors.white : Colors.transparent,
           ),
         ),
       ),
@@ -127,22 +131,28 @@ class _RadialButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final _colorTween = ColorTween(
       begin: model.status == TableStatus.occupied
-          ? Colors.yellow[300]
+          ? RallyColors.primaryColor.withOpacity(.5)
           : model.status == TableStatus.incomplete
-              ? RallyColors.primaryColor.withOpacity(.5)
-              : RallyColors.primaryColor,
+              ? CupertinoColors.tertiarySystemFill
+              : CupertinoColors.tertiarySystemFill,
       end: RallyColors.focusColor,
     );
 
     return RadialMenu(
       closedBuilder: (radialAnimationController, context) {
         return FloatingActionButton(
+          elevation: 0,
           heroTag: null,
           onPressed: () {
             radialAnimationController.forward();
           },
           backgroundColor: _colorTween.animate(radialAnimationController).value,
-          child: Text(model.id.toString()),
+          child: Text(
+            model.id.toString(),
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
         );
       },
       openBuilder: (radialAnimationController, context) {

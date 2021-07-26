@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:posapp/theme/rally.dart';
 
 const _width = 98.0;
 const _height = 98.0;
@@ -43,7 +44,7 @@ class Avatar extends StatelessWidget {
       color: Colors.transparent,
       padding: EdgeInsets.all(0.0),
       shape: const CircleBorder(
-        side: BorderSide(width: 3.0, color: Colors.black38),
+        side: BorderSide(width: 3.0, color: RallyColors.primaryColor),
       ),
       child: CircleAvatar(
         backgroundImage: imgProvider ?? AssetImage('assets/coffee.png'),

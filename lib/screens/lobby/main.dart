@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -98,10 +100,102 @@ class _InteractiveBody extends StatelessWidget {
       transformationController: transformController,
       child: Stack(
         children: [
+          Container(
+            decoration: BoxDecoration(color: RallyColors.primaryBackground),
+          ),
+          Positioned(
+            top: 0,
+            right: 1,
+            child: Container(
+              height: 180,
+              width: 180,
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: RallyColors.primaryBackground,
+                  boxShadow: [
+                    BoxShadow(blurRadius: 10, color: RallyColors.primaryColor, spreadRadius: 5)
+                  ]),
+            ),
+          ),
+          Positioned(
+            bottom: 0,
+            right: 1,
+            child: Container(
+              height: 180,
+              width: 180,
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: RallyColors.primaryBackground,
+                  boxShadow: [
+                    BoxShadow(blurRadius: 10, color: RallyColors.primaryColor, spreadRadius: 5)
+                  ]),
+            ),
+          ),
+          Positioned(
+            left: 150,
+            bottom: 150,
+            right: 150,
+            top: 150,
+            child: Container(
+              height: 180,
+              width: 180,
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: RallyColors.primaryBackground,
+                  boxShadow: [
+                    BoxShadow(blurRadius: 10, color: RallyColors.primaryColor, spreadRadius: 5)
+                  ]),
+            ),
+          ),
+
+          Positioned(
+            left: 1,
+            bottom: 0,
+            child: Container(
+              height: 180,
+              width: 180,
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: RallyColors.primaryBackground,
+                  boxShadow: [
+                    BoxShadow(blurRadius: 10, color: RallyColors.primaryColor, spreadRadius: 5)
+                  ]),
+            ),
+          ),
+          Positioned(
+            left: 1,
+            top: 0,
+            child: Container(
+              height: 180,
+              width: 180,
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: RallyColors.primaryBackground,
+                  boxShadow: [
+                    BoxShadow(blurRadius: 10, color: RallyColors.primaryColor, spreadRadius: 5)
+                  ]),
+            ),
+          ),
+
           // create a container (1) here to act as fixed background for the entire screen,
           // pan & scale effect from InteractiveViewer will actually interact with this container
           // thus also easily scale & pan all widgets inside the stack
-          Container(key: bgKey),
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(30),
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                child: Container(
+                  key: bgKey,
+                  decoration: BoxDecoration(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
+              ),
+            ),
+          ),
           for (var model in supplier.tables)
             DraggableWidget(
               x: model.getOffset().x,

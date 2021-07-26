@@ -15,7 +15,7 @@ import '../avatar.dart';
 import 'custom_scaffold.dart';
 import 'debouncer.dart';
 
-const _animDuration = Duration(milliseconds: 500);
+const _animDuration = Duration(milliseconds: 600);
 
 class EditMenuScreen extends StatefulWidget {
   @override
@@ -23,7 +23,7 @@ class EditMenuScreen extends StatefulWidget {
 }
 
 class EditMenuScreenState extends State<EditMenuScreen> {
-  final _debouncer = Debouncer(milliseconds: 300);
+  final _debouncer = Debouncer(milliseconds: 600);
 
   /// The entire menu (all m)
   late final Menu m;
@@ -141,6 +141,7 @@ class __ListItemState extends State<_ListItem> {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: RallyColors.cardBackground,
       child: AnimatedCrossFade(
         duration: _animDuration,
         crossFadeState: currentState,
