@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:posapp/theme/rally.dart';
@@ -55,14 +57,27 @@ class Avatar extends StatelessWidget {
 }
 
 Future<Uint8List?> _getImage() async {
-  final pickedFile = await ImagePicker().getImage(
-    source: ImageSource.gallery,
-    maxHeight: _height,
-    maxWidth: _width,
-    imageQuality: 1,
-  );
-  if (pickedFile != null) {
-    return pickedFile.readAsBytes();
+  if (Platform.isMacOS || Platform.isWindows) {
+    try {
+      final pickedFile = await FilePicker.platform.pickFiles(type: FileType.image, withData: true);
+      if (pickedFile!.files.first.bytes != null) {
+        return pickedFile.files.first.bytes;
+      }
+
+      return null;
+    } catch (e) {
+      print(e);
+    }
+  } else {
+    final pickedFile = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+      maxHeight: _height,
+      maxWidth: _width,
+      imageQuality: 1,
+    );
+    if (pickedFile != null) {
+      return pickedFile.readAsBytes();
+    }
+    return null;
   }
-  return null;
 }

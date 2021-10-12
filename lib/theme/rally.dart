@@ -2,7 +2,6 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 const bottomNavbarHeight = 48.0;
 
@@ -13,6 +12,7 @@ class RallyColors {
   static const Color cardBackground = Color(0xFF1D1D35);
   static const Color buttonColor = Color(0xFF00BF6D);
   static const Color primaryColor = Color(0xFF00BF6D);
+  static const Color secondaryColor = Color(0xff23b6e6);
 }
 
 ThemeData buildRallyTheme() {

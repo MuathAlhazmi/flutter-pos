@@ -12,7 +12,7 @@ snackBarWidget(context, text, icon, iconcolor) {
           margin: EdgeInsets.symmetric(horizontal: 20),
           borderRadius: BorderRadius.circular(20),
           controller: controller,
-          backgroundColor: RallyColors.primaryColor,
+          backgroundColor: RallyColors.primaryBackground,
           barrierBlur: 13.0,
           barrierColor: Colors.black38,
           barrierDismissible: true,

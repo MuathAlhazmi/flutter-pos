@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../common/common.dart';
-import '../../theme/rally.dart';
 import '../../provider/src.dart';
+import '../../theme/rally.dart';
 import '../popup_del.dart';
 
 class TableIcon extends StatelessWidget {

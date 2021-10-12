@@ -35,11 +35,13 @@
   "edit_menu_formLabel": "Dish",
   "edit_menu_formPrice": "Price",
   "history_toggleDiscount": "Apply Discount Rate",
-  "history_delPopUpTitle": "Ignore this order?",
+  "history_delPopUpTitle": "Delete this order?",
   "history_rangePickerHelpTxt": "Select range",
   "journal_entry": "Entry",
   "journal_entryHint": "Describe your entry",
   "journal_entryReqTxt": "Entry description is required",
   "journal_amt": "Amount",
-  "journal_datetime": "Time"
+  "journal_datetime": "Time",
+  "lang_message": "Change language",
+  "retPopUpTitle": "Retrive this order?"
 }

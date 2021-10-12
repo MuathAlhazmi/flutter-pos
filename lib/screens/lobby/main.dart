@@ -3,31 +3,63 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:posapp/main.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import './table_icon.dart';
 import '../../common/common.dart';
-import '../../theme/rally.dart';
 import '../../provider/src.dart';
+import '../../theme/rally.dart';
 import 'anim_longclick_fab.dart';
 
 class LobbyScreen extends StatelessWidget {
+  var languageCode = 'ar';
+
   @override
   Widget build(BuildContext context) {
+    changeLocale() async {
+      var prefs = await SharedPreferences.getInstance();
+      languageCode = prefs.getString('languageCode') ?? 'ar';
+
+      if (languageCode == 'en') {
+        print(true);
+        PosApp.setLocale(context, Locale('ar'));
+      }
+      if (languageCode == 'ar') {
+        print(false);
+
+        PosApp.setLocale(context, Locale('en'));
+      }
+    }
+
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
       bottomNavigationBar: BottomAppBar(
         color: RallyColors.primaryBackground,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Tooltip(
+              message: AppLocalizations.of(context)!.lang_message,
+              child: MaterialButton(
+                onPressed: changeLocale,
+                minWidth: MediaQuery.of(context).size.width / 3,
+                shape: CustomShape(side: CustomShapeSide.left),
+                child: Icon(Icons.language),
+              ),
+            ),
+            Tooltip(
               message: AppLocalizations.of(context)!.lobby_report,
               child: MaterialButton(
                 onPressed: () {
                   showBottomSheetMenu(context);
                 },
-                minWidth: MediaQuery.of(context).size.width / 2,
+                minWidth: MediaQuery.of(context).size.width / 3,
                 shape: CustomShape(side: CustomShapeSide.left),
                 child: Icon(CupertinoIcons.square_list),
               ),
@@ -36,9 +68,9 @@ class LobbyScreen extends StatelessWidget {
               message: AppLocalizations.of(context)!.lobby_menuEdit,
               child: MaterialButton(
                 onPressed: () => Navigator.pushNamed(context, '/edit-menu'),
-                minWidth: MediaQuery.of(context).size.width / 2,
+                minWidth: MediaQuery.of(context).size.width / 3,
                 shape: CustomShape(side: CustomShapeSide.right),
-                child: Icon(CupertinoIcons.pencil_circle_fill),
+                child: Icon(Icons.local_dining_sharp),
               ),
             )
           ],
@@ -47,7 +79,7 @@ class LobbyScreen extends StatelessWidget {
       floatingActionButton: AnimatedLongClickableFAB(
         onLongPress: () => _addTable(context),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterFloat,
       body: _InteractiveBody(),
     );
   }
@@ -103,80 +135,6 @@ class _InteractiveBody extends StatelessWidget {
           Container(
             decoration: BoxDecoration(color: RallyColors.primaryBackground),
           ),
-          Positioned(
-            top: 0,
-            right: 1,
-            child: Container(
-              height: 180,
-              width: 180,
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: RallyColors.primaryBackground,
-                  boxShadow: [
-                    BoxShadow(blurRadius: 10, color: RallyColors.primaryColor, spreadRadius: 5)
-                  ]),
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            right: 1,
-            child: Container(
-              height: 180,
-              width: 180,
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: RallyColors.primaryBackground,
-                  boxShadow: [
-                    BoxShadow(blurRadius: 10, color: RallyColors.primaryColor, spreadRadius: 5)
-                  ]),
-            ),
-          ),
-          Positioned(
-            left: 150,
-            bottom: 150,
-            right: 150,
-            top: 150,
-            child: Container(
-              height: 180,
-              width: 180,
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: RallyColors.primaryBackground,
-                  boxShadow: [
-                    BoxShadow(blurRadius: 10, color: RallyColors.primaryColor, spreadRadius: 5)
-                  ]),
-            ),
-          ),
-
-          Positioned(
-            left: 1,
-            bottom: 0,
-            child: Container(
-              height: 180,
-              width: 180,
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: RallyColors.primaryBackground,
-                  boxShadow: [
-                    BoxShadow(blurRadius: 10, color: RallyColors.primaryColor, spreadRadius: 5)
-                  ]),
-            ),
-          ),
-          Positioned(
-            left: 1,
-            top: 0,
-            child: Container(
-              height: 180,
-              width: 180,
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: RallyColors.primaryBackground,
-                  boxShadow: [
-                    BoxShadow(blurRadius: 10, color: RallyColors.primaryColor, spreadRadius: 5)
-                  ]),
-            ),
-          ),
-
           // create a container (1) here to act as fixed background for the entire screen,
           // pan & scale effect from InteractiveViewer will actually interact with this container
           // thus also easily scale & pan all widgets inside the stack

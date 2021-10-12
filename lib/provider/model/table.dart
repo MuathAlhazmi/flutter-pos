@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+
 import '../../common/common.dart';
-import '../../printer/thermal_printer.dart';
 import '../src.dart';
 
 @immutable
@@ -79,11 +79,6 @@ class TableModel {
     supplier.notifyListeners();
   }
 
-  //TODO: implement store name, set it in the receipt header
-  Future<void> _printReceipt(BuildContext context, [double? customerPayAmount]) async {
-    return Printer.print(context, _s.current, customerPayAmount);
-  }
-
   void _clear() {
     _s.lst = [Order(id), Order(id)];
   }
@@ -101,7 +96,6 @@ class TableModel {
     double? customerPayAmount,
   }) async {
     if (supplier != null) await _checkout(supplier, atTime);
-    if (context != null && !kIsWeb) await _printReceipt(context, customerPayAmount);
     _clear();
   }
 

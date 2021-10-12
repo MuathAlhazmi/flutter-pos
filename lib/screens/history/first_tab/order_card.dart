@@ -1,21 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:posapp/theme/rally.dart';
+import 'package:provider/provider.dart';
 
 import '../../../common/common.dart';
 import '../../../provider/src.dart';
 import '../../popup_del.dart';
 
-class OrderCard extends StatelessWidget {
+class OrderCard extends StatefulWidget {
   final int index;
 
   const OrderCard(this.index);
 
   @override
+  State<OrderCard> createState() => _OrderCardState();
+}
+
+class _OrderCardState extends State<OrderCard> {
+  @override
   Widget build(BuildContext context) {
     final provider = Provider.of<HistorySupplierByDate>(context);
-    final order = provider.data.elementAt(index);
+    final order = provider.data.elementAt(widget.index);
     var del = order.isDeleted;
     return Stack(
       alignment: Alignment.center,
@@ -26,7 +32,8 @@ class OrderCard extends StatelessWidget {
             key: ObjectKey(order),
             child: ListTile(
               leading: CircleAvatar(
-                backgroundColor: del == true ? Colors.grey[400]!.withOpacity(0.5) : null,
+                backgroundColor:
+                    del == true ? Colors.grey[400]!.withOpacity(0.5) : RallyColors.primaryColor,
                 child: Text(order.id.toString()),
               ),
               title: Text(
@@ -34,15 +41,36 @@ class OrderCard extends StatelessWidget {
                 style: del == true ? TextStyle(color: Colors.grey[200]!.withOpacity(0.5)) : null,
               ),
               onLongPress: del == true
-                  ? null
+                  ? () async {
+                      var result = await popUpDelete(
+                        context,
+                        title: Text(
+                          AppLocalizations.of(context)?.retPopUpTitle ?? 'Ignore?',
+                          style: TextStyle(
+                            fontFamily: 'Cairo',
+                          ),
+                        ),
+                      );
+                      if (result == true) {
+                        order.isDeleted = false;
+
+                        setState(() {});
+                      }
+                    }
                   : () async {
                       var result = await popUpDelete(
                         context,
-                        title:
-                            Text(AppLocalizations.of(context)?.history_delPopUpTitle ?? 'Ignore?'),
+                        title: Text(
+                          AppLocalizations.of(context)?.history_delPopUpTitle ?? 'Ignore?',
+                          style: TextStyle(
+                            fontFamily: 'Cairo',
+                          ),
+                        ),
                       );
                       if (result == true) {
-                        await provider.ignoreOrder(order, index);
+                        await provider.ignoreOrder(order, widget.index);
+
+                        setState(() {});
                       }
                     },
               onTap: () {
@@ -63,14 +91,14 @@ class OrderCard extends StatelessWidget {
                 Money.format(provider.saleAmountOf(order)),
                 style: TextStyle(
                   letterSpacing: 3,
-                  color: del == true ? Colors.grey[200]!.withOpacity(0.5) : Colors.lightGreen,
+                  color:
+                      del == true ? Colors.grey[200]!.withOpacity(0.5) : RallyColors.primaryColor,
                   fontSize: 20,
                 ),
               ),
             ),
           ),
         ),
-        if (del == true) Divider(color: Colors.black, thickness: 1.0),
       ],
     );
   }

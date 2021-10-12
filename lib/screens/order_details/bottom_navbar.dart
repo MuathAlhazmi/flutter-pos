@@ -1,13 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:posapp/snackbar.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 
 import '../../common/common.dart' show Money, MoneyFormatter, NumberEL100Formatter;
-import '../../theme/rally.dart';
 import '../../provider/src.dart' show Supplier, TableModel;
+import '../../theme/rally.dart';
 
 class BottomNavBar extends StatelessWidget {
   final String fromScreen;
@@ -19,6 +18,7 @@ class BottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
+      color: RallyColors.primaryBackground,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: fromScreen != 'history'
@@ -71,7 +71,7 @@ class _CheckoutButton extends StatelessWidget {
             }
           }
         },
-        child: Icon(Icons.print),
+        child: Icon(Icons.check),
       ),
     );
   }
@@ -186,7 +186,9 @@ Future<double?> _popUpDiscount(BuildContext context, double totalPrice) {
 }
 
 Future<double?> _popUpPayment(BuildContext scaffoldCtx, double needsToPay) {
-  final t = TextEditingController(text: Money.format(needsToPay));
+  final payed = needsToPay.toStringAsFixed(1);
+
+  final t = TextEditingController(text: payed);
   return showDialog<double?>(
     context: scaffoldCtx,
     barrierDismissible: false,
@@ -194,9 +196,9 @@ Future<double?> _popUpPayment(BuildContext scaffoldCtx, double needsToPay) {
       return AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         content: TextField(
+          enabled: false,
           controller: t,
           keyboardType: TextInputType.numberWithOptions(signed: true),
-          inputFormatters: [MoneyFormatter()],
           textAlign: TextAlign.center,
           decoration: InputDecoration(
             labelText: AppLocalizations.of(context)!.details_customerPay,
@@ -206,13 +208,9 @@ Future<double?> _popUpPayment(BuildContext scaffoldCtx, double needsToPay) {
         actions: [
           TextButton(
             onPressed: () {
-              final p = Money.unformat(t.text);
-              if (p < needsToPay) {
-                snackBarWidget(context, AppLocalizations.of(context)!.details_notEnough,
-                    Icons.error, Colors.white);
-              } else {
-                Navigator.pop<double>(context, p.toDouble());
-              }
+              final p = double.parse(t.text);
+              Navigator.pop<double>(context,
+                  double.parse(Money.format(double.parse(p.toDouble().toStringAsFixed(1)))));
             },
             child: Icon(Icons.check),
           ),

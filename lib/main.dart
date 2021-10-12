@@ -1,18 +1,20 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:posapp/screens/draw/draw.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'theme/theme.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'database_factory.dart';
 import 'provider/src.dart';
-import 'screens/order_details/main.dart';
 import 'screens/edit_menu/main.dart';
-import 'screens/history/main.dart';
 import 'screens/expense_journal/main.dart';
+import 'screens/history/main.dart';
 import 'screens/lobby/main.dart';
 import 'screens/menu/main.dart';
+import 'screens/order_details/main.dart';
 import 'storage_engines/connection_interface.dart';
+import 'theme/theme.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,15 +24,58 @@ void main() {
   runApp(PosApp(storage));
 }
 
-class PosApp extends StatelessWidget {
+class PosApp extends StatefulWidget {
+  static void setLocale(BuildContext context, Locale newLocale) async {
+    var state = context.findAncestorStateOfType<_PosAppState>();
+
+    var prefs = await SharedPreferences.getInstance();
+
+    await prefs.setString('languageCode', newLocale.languageCode);
+    await prefs.setString('countryCode', "");
+
+    state?.setState(() {
+      state._locale = newLocale;
+    });
+  }
+
   final DatabaseConnectionInterface _storage;
   final Future _init;
 
   PosApp(this._storage) : _init = _storage.open();
+  static _PosAppState? of(BuildContext context) => context.findAncestorStateOfType<_PosAppState>();
+
+  @override
+  State<PosApp> createState() => _PosAppState();
+}
+
+class _PosAppState extends State<PosApp> {
+  Locale _locale = Locale('ar', 'ps');
+
+  @override
+  void initState() {
+    super.initState();
+    this._fetchLocale().then((locale) {
+      setState(() {
+        this._locale = locale;
+      });
+    });
+  }
+
+  /*
+  To get local from SharedPreferences if exists
+   */
+  Future<Locale> _fetchLocale() async {
+    var prefs = await SharedPreferences.getInstance();
+
+    var languageCode = prefs.getString('languageCode') ?? 'ar';
+
+    return Locale(languageCode);
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      locale: _locale,
       debugShowCheckedModeBanner: false,
       theme: appTheme,
       localizationsDelegates: [
@@ -39,16 +84,16 @@ class PosApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: [Locale('en')],
+      supportedLocales: [Locale('ar'), Locale('en')],
       initialRoute: '/',
       builder: (_, screen) => FutureBuilder<dynamic>(
-        future: _init,
+        future: widget._init,
         builder: (_, dbSnapshot) {
           if (dbSnapshot.hasData) {
             return MultiProvider(
               providers: [
-                ChangeNotifierProvider(create: (_) => Supplier(database: _storage)),
-                Provider(create: (_) => MenuSupplier(database: _storage)),
+                ChangeNotifierProvider(create: (_) => Supplier(database: widget._storage)),
+                Provider(create: (_) => MenuSupplier(database: widget._storage)),
               ],
               child: screen,
             );
@@ -92,10 +137,10 @@ class PosApp extends StatelessWidget {
                 child: MultiProvider(
                   providers: [
                     ChangeNotifierProvider(
-                      create: (_) => HistorySupplierByDate(database: _storage),
+                      create: (_) => HistorySupplierByDate(database: widget._storage),
                     ),
                     ChangeNotifierProxyProvider<HistorySupplierByDate, HistorySupplierByLine>(
-                      create: (_) => HistorySupplierByLine(database: _storage),
+                      create: (_) => HistorySupplierByLine(database: widget._storage),
                       update: (_, firstTab, lineChart) => lineChart!..update(firstTab),
                     ),
                   ],
@@ -107,7 +152,7 @@ class PosApp extends StatelessWidget {
             return routeBuilder(
               ChangeNotifierProvider(
                 create: (_) {
-                  return ExpenseSupplier(database: _storage);
+                  return ExpenseSupplier(database: widget._storage);
                 },
                 child: ExpenseJournalScreen(),
               ),
@@ -126,3 +171,16 @@ MaterialPageRoute routeBuilder(Widget screen) => MaterialPageRoute(
       builder: (_) => screen,
       maintainState: true,
     );
+
+class FallbackCupertinoLocalisationsDelegate extends LocalizationsDelegate<CupertinoLocalizations> {
+  const FallbackCupertinoLocalisationsDelegate();
+
+  @override
+  bool isSupported(Locale locale) => true;
+
+  @override
+  Future<CupertinoLocalizations> load(Locale locale) => DefaultCupertinoLocalizations.load(locale);
+
+  @override
+  bool shouldReload(FallbackCupertinoLocalisationsDelegate old) => false;
+}

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:posapp/snackbar.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:posapp/snackbar.dart';
+import 'package:posapp/theme/rally.dart';
+import 'package:provider/provider.dart';
 
 import '../../common/common.dart';
 import '../../provider/src.dart';
@@ -17,7 +18,12 @@ class MenuScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final menuSupplier = Provider.of<MenuSupplier>(context);
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
       bottomNavigationBar: BottomAppBar(
+        color: RallyColors.primaryBackground,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [

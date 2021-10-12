@@ -1,6 +1,7 @@
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 import 'package:posapp/theme/rally.dart';
+
 import '../avatar.dart';
 
 const double height = 85.0;
@@ -101,7 +102,7 @@ class _CounterState extends State<Counter> with SingleTickerProviderStateMixin {
                 behavior: HitTestBehavior.translucent,
                 onTap: () => value = add(animController, value),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 2.0, vertical: 4.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10.0),
                   child: Row(
                     children: [
                       Expanded(

@@ -35,11 +35,13 @@
   "edit_menu_formLabel": "الطبق",
   "edit_menu_formPrice": "السعر",
   "history_toggleDiscount": "تطبيق معدل الخصم",
-  "history_delPopUpTitle": "تجاهل هذا الطلب؟",
+  "history_delPopUpTitle": "حذف هذا الطلب؟",
   "history_rangePickerHelpTxt": "اختر نطاق",
   "journal_entry": "تدوين",
   "journal_entryHint": "صف تدوينك",
   "journal_entryReqTxt": "صفة التدوين مطلوبة",
   "journal_amt": "المبلغ",
-  "journal_datetime": "الوقت"
+  "journal_datetime": "الوقت",
+  "lang_message": "تغيير اللغة",
+  "retPopUpTitle": "استرجاع هذا الطلب؟"
 }

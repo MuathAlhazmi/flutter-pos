@@ -7,8 +7,8 @@ import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 
 import '../../common/common.dart';
-import '../../theme/rally.dart';
 import '../../provider/src.dart';
+import '../../theme/rally.dart';
 import '../avatar.dart';
 import 'menu_form.dart';
 
@@ -75,6 +75,10 @@ class _CustomScaffoldState extends State<CustomScaffold> with SingleTickerProvid
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
       extendBody: true,
       bottomNavigationBar: BottomAppBar(
         color: RallyColors.primaryBackground,
